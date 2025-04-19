@@ -1,0 +1,129 @@
+body {
+  background: #131b21;
+  overflow: hidden; /* Prevent scrollbars */
+}
+
+.container {
+  width: 50%;
+  margin: 0 auto;
+  position: relative; /* To position slides within container */
+  height: 600px; /* Increased height */
+}
+
+.slide-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute slides vertically */
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.slide {
+  text-align: center;
+  color: #fff;
+  font-family: 'Dancing Script', cursive;
+  text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4, 0 0 30px #ff69b4, 0 0 40px #ff69b4, 0 0 50px #ff69b4, 0 0 60px #ff69b4, 0 0 70px #ff69b4;
+
+.glitter {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #FFF;
+  border-radius: 50%;
+  animation: sparkle 1.5s infinite;
+  opacity: 0;
+}
+
+.glitter:nth-child(1) { top: 20%; left: 20%; animation-delay: 0.2s; }
+.glitter:nth-child(2) { top: 30%; left: 60%; animation-delay: 0.4s; }
+.glitter:nth-child(3) { top: 50%; left: 20%; animation-delay: 0.6s; }
+.glitter:nth-child(4) { top: 70%; left: 60%; animation-delay: 0.8s; }
+.glitter:nth-child(5) { top: 80%; left: 30%; animation-delay: 1s; }
+
+@keyframes sparkle {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+  opacity: 0;
+  margin: 30px 0;
+  padding: 30px;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 10px;
+  max-width: 90%;
+  font-size: 12pt;
+  letter-spacing: 1px;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Add transition for smooth animation */
+}
+
+.slide.top {
+  align-self: flex-start;
+  margin-top: 50px; /* Added margin-top for better spacing */
+}
+
+.slide.bottom {
+  align-self: flex-end;
+  margin-bottom: 50px; /* Added margin-bottom for better spacing */
+}
+
+.slide.active {
+  opacity: 1;
+  transform: translateY(0); /* Remove translateY when active */
+}
+
+
+svg#flower-frame {
+  height: 90vh;
+  width: 100%;
+  position: relative; /* Position the SVG behind the slides */
+  z-index: 0; /* Ensure SVG is behind slides */
+}
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const slideTexts = [
+    "Kula gaturaken sedaya kelepatan kawula nyuwun agunge pengaksami saking sedaya kalepatan kula",
+    "Saya mengakui semua kesalahan saya, dan saya meminta maaf sebesar besarnya atas semua kesalahan saya",
+    "Tidak halal bagi seorang muslim untuk tidak bertegur sapa pada saudaranya lebih dari tiga hari"
+  ];
+
+  let currentSlideIndex = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      if (i === index) {
+        slide.classList.add('active');
+      }
+    });
+  }
+
+  function nextSlide() {
+    if (currentSlideIndex < slideTexts.length -1) {
+      currentSlideIndex++;
+      showSlide(currentSlideIndex);
+    } else {
+      clearInterval(intervalId); // Stop the animation after the last slide
+    }
+  }
+  
+  function init(){
+      //Set Initial Slide Content
+      slides[0].innerText = slideTexts[0];
+      slides[1].innerText = slideTexts[1];
+      slides[2].innerText = slideTexts[2];
+      showSlide(0);
+      
+      const intervalId = setInterval(nextSlide, 4000);
+  }
+  
+  init();
+</script>
